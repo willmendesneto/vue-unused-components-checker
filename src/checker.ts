@@ -1,18 +1,21 @@
-import ora from 'ora';
-import * as textSearch from 'rx-text-search';
 import async from 'async';
-import path from 'path';
 import glob from 'glob';
+import ora from 'ora';
+import path from 'path';
+import * as textSearch from 'rx-text-search';
 
 export function getCheckExpression(file): string {
-  return `(import|require).*(?:[\'\"]\\b|\\/)${path.basename(file, path.extname(file))}(?:\\.(?:vue))?[\'\"][\\\);,]?[,;]?`;
+  return `(import|require).*(?:[\'\"]\\b|\\/)${path.basename(
+    file,
+    path.extname(file),
+  )}(?:\\.(?:vue))?[\'\"][\\\);,]?[,;]?`;
 }
 
 export default function (src, maxOpenFiles, ignore): void {
   const spinner = ora('Checking for unused Components').start();
 
   glob(
-    '**/*.vue',
+    '**/*.{js,ts,vue}',
     {
       cwd: src,
       ignore: ignore,

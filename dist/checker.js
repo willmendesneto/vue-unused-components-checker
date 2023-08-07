@@ -23,18 +23,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCheckExpression = void 0;
-const ora_1 = __importDefault(require("ora"));
-const textSearch = __importStar(require("rx-text-search"));
 const async_1 = __importDefault(require("async"));
-const path_1 = __importDefault(require("path"));
 const glob_1 = __importDefault(require("glob"));
+const ora_1 = __importDefault(require("ora"));
+const path_1 = __importDefault(require("path"));
+const textSearch = __importStar(require("rx-text-search"));
 function getCheckExpression(file) {
     return `(import|require).*(?:[\'\"]\\b|\\/)${path_1.default.basename(file, path_1.default.extname(file))}(?:\\.(?:vue))?[\'\"][\\\);,]?[,;]?`;
 }
 exports.getCheckExpression = getCheckExpression;
 function default_1(src, maxOpenFiles, ignore) {
     const spinner = ora_1.default('Checking for unused Components').start();
-    glob_1.default('**/*.vue', {
+    glob_1.default('**/*.{js,ts,vue}', {
         cwd: src,
         ignore: ignore,
     }, function (err, files) {
